@@ -1,0 +1,23 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Ganti dengan nama branch yang sesuai
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_USERNAME }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Build Docker image
+      run: docker build -t your-dockerhub-username/your-repository-name:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: docker push your-dockerhub-username/your-repository-name:latest
